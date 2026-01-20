@@ -592,6 +592,7 @@ public class Constants {
     public static final String QUESTION_TYPE = "qType";
     public static final String SELECTED_ANSWER = "selectedAnswer";
     public static final String INDEX = "index";
+    public static final String POSITION = "position";
     public static final String MCQ_SCA = "mcq-sca";
     public static final String MCQ_MCA = "mcq-mca";
     public static final String FTB = "ftb";

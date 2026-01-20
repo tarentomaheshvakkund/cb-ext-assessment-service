@@ -1029,10 +1029,16 @@ public class AssessmentUtilServiceV2Impl implements AssessmentUtilServiceV2 {
 					case Constants.FTB:
 						for (Map<String, Object> option : options) {
 							if ((boolean) option.get(Constants.ANSWER)) {
-								int position = Integer.parseInt((String) option.get("position")) - 1;
 								Map<String, Object> valueObj = mapper.convertValue(option.get(Constants.VALUE), new TypeReference<Map<String, Object>>() {
 								});
-								correctOption.add(position + "-" + valueObj.get(Constants.BODY).toString());
+								String answerText = valueObj.get(Constants.BODY).toString();
+								// Support both formats: position-based and text-only
+								if (MapUtils.isNotEmpty(option) && option.containsKey(Constants.POSITION) && option.get(Constants.POSITION) != null) {
+									int position = Integer.parseInt((String) option.get(Constants.POSITION)) - 1;
+									correctOption.add(position + "-" + answerText);
+								} else {
+									correctOption.add(answerText);
+								}
 							}
 						}
 						break;
@@ -1104,7 +1110,11 @@ public class AssessmentUtilServiceV2Impl implements AssessmentUtilServiceV2 {
 				break;
 			case Constants.FTB:
 				for (Map<String, Object> option : options) {
-					marked.add(option.get(Constants.INDEX) + "-" + option.get(Constants.SELECTED_ANSWER));
+					if (MapUtils.isNotEmpty(option) && option.containsKey(Constants.INDEX) && option.get(Constants.INDEX) != null) {
+						marked.add(option.get(Constants.INDEX) + "-" + option.get(Constants.SELECTED_ANSWER));
+					} else {
+						marked.add((String) option.get(Constants.SELECTED_ANSWER));
+					}
 				}
 				break;
 			case Constants.MCQ_SCA:
