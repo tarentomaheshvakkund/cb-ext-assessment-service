@@ -1926,7 +1926,7 @@ public class AssessmentUtilServiceV2Impl implements AssessmentUtilServiceV2 {
 												Map<String, Object> assessmentAllDetail,
 												List<Map<String, Object>> userAssessmentDataList) {
 		try {
-			if (userAssessmentDataList == null || userAssessmentDataList.isEmpty()) {
+			if (CollectionUtils.isEmpty(userAssessmentDataList)) {
 				return 0;
 			}
 			int coolOffPeriodDays = (Integer) assessmentAllDetail.get(Constants.COOL_OFF_PERIOD);
@@ -1934,7 +1934,7 @@ public class AssessmentUtilServiceV2Impl implements AssessmentUtilServiceV2 {
 					? (Integer) assessmentAllDetail.get(Constants.MAX_ASSESSMENT_RETAKE_ATTEMPTS)
 					: 0;
 			List<Map<String, Object>> submittedAttempts = filterSubmittedAttempts(userAssessmentDataList);
-			if (submittedAttempts.isEmpty()) {
+			if (CollectionUtils.isEmpty(submittedAttempts)) {
 				return 0;
 			}
 			int currentCycleCount = countCurrentCycleAttempts(submittedAttempts, coolOffPeriodDays, retakeAttemptsAllowed, userId, assessmentIdentifier);

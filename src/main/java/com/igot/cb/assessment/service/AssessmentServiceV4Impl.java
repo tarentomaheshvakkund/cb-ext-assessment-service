@@ -94,7 +94,7 @@ public class AssessmentServiceV4Impl implements AssessmentServiceV4 {
                 if (serverProperties.isAssessmentRetakeCountVerificationEnabled()) {
                     retakeAttemptsConsumed = calculateRetakeAttemptsConsumed(
                             userId, assessmentIdentifier, assessmentAllDetail, retakeAttemptsAllowed, response);
-                    if (response.getResponseCode() == HttpStatus.BAD_REQUEST) {
+                    if (HttpStatus.BAD_REQUEST.equals(response.getResponseCode())) {
                         return response;
                     }
                     if (retakeAttemptsConsumed >= retakeAttemptsAllowed) {
